@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Snake and Ladder</title>
+    <script>
+        async function joinGame() {
+            const name = document.getElementById("name").value;
+            const response = await fetch(`/game/join?name=${name}`, { method: 'POST' });
+            const data = await response.json();
+            document.getElementById("playerId").value = data.playerId;
+        }
+
+        async function startGame() {
+            await fetch(`/game/start`, { method: 'POST' });
+        }
+
+        async function getState() {
+            const response = await fetch(`/game/state`);
+            const data = await response.json();
+            console.log(data);
+        }
+
+        async function rollDice() {
+            const playerId = document.getElementById("playerId").value;
+            const response = await fetch(`/game/roll?playerId=${playerId}`, { method: 'POST' });
+            const data = await response.json();
+            console.log(data);
+        }
+    </script>
+</head>
+<body>
+    <h1>Snake and Ladder</h1>
+    <input type="text" id="name" placeholder="Enter your name">
+    <button onclick="joinGame()">Join Game</button>
+    <br>
+    <input type="text" id="playerId" placeholder="Player ID" readonly>
+    <br>
+    <button onclick="startGame()">Start Game</button>
+    <br>
+    <button onclick="getState()">Get Game State</button>
+    <br>
+    <button onclick="rollDice()">Roll Dice</button>
+</body>
+</html>
